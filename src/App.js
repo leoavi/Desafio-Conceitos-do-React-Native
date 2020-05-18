@@ -22,11 +22,20 @@ export default function App() {
   }, []);
 
   async function handleLikeRepository(id) {
-    api.post(`repositories/${id}/like`);
+    const response = await api.post(`repositories/${id}/like`);
+
+    const repositorie = response.data;
+
+    const newRepositories = repositories.filter(
+      (repositorie) => repositorie.id !== id
+    );
+
+    setRepositories([...newRepositories, repositorie]);
   }
 
   return (
     <>
+      {console.log(repositories)}
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
       <SafeAreaView style={styles.container}>
         <FlatList
